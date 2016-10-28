@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1477147243 source:c:\users\dogea\desktop\programming\robotics\ftc_app\ftcscout\ftcscout.cpp
+	"FTCScout.h"
+
+1477146469 c:\users\dogea\desktop\programming\robotics\ftc_app\ftcscout\ftcscout.h
+	<iostream>
+
+1477147235 source:c:\users\dogea\desktop\programming\robotics\ftc_app\ftcscout\main.cpp
+	"FTCScout.h"
+
