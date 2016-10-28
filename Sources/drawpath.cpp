@@ -1,4 +1,4 @@
-#include "drawpath.h"
+#include "../Headers/drawpath.h"
 #include <QDebug>
 
 DrawPath::DrawPath(QObject *parent) :

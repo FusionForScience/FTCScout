@@ -1,9 +1,9 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "../Headers/mainwindow.h"
+#include "../Headers/drawpath.h"
+
+#include <ui_mainwindow.h>
 
 using namespace std;
-
-#include "drawpath.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

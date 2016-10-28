@@ -12,16 +12,16 @@ TARGET = FTCScout
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    team.cpp \
-    drawpath.cpp
+SOURCES += Sources/main.cpp\
+        Sources/mainwindow.cpp \
+    Sources/team.cpp \
+    Sources/drawpath.cpp
 
-HEADERS  += mainwindow.h \
-    team.h \
-    drawpath.h
+HEADERS  += Headers/mainwindow.h \
+    Headers/team.h \
+    Headers/drawpath.h
 
-FORMS    += mainwindow.ui
+FORMS    += Forms/mainwindow.ui
 
 RESOURCES += \
     resources.qrc
