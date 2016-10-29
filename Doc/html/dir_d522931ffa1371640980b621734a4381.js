@@ -1,4 +1,0 @@
-var dir_d522931ffa1371640980b621734a4381 =
-[
-    [ "dogea", "dir_67210dd6f6d2c5f52514cb17cd786d12.html", "dir_67210dd6f6d2c5f52514cb17cd786d12" ]
-];
