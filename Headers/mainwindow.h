@@ -9,6 +9,7 @@
 #include <QPixmap>
 #include <QListWidgetItem>
 #include <QInputDialog>
+#include <QDir>
 #include <fstream>
 #include <QDebug>
 
@@ -45,8 +46,8 @@ public:
 private:
     // Constants
     // Resource paths
-    const string FIELD_IMAGE = ":/img/Resources/img/field.PNG"; /**< File location of field image (fixme) */
-    const string DATA_FILE = "C:/Users/dogea/Desktop/data.txt"; /**< File location of data file (fixme) */
+    const string FIELD_IMAGE = ":img/field.PNG"; /**< File location of field image (fixme) */
+    string DATA_FILE = "../Data"; /**< File location of data file (fixme) */
 
     // Variables
     Ui::MainWindow *ui;     /**< Main window object */
@@ -139,7 +140,7 @@ private slots:
      * @post Current UI changed, list of teams increases by one,
      *       and data file updated.
      */
-    void on_addButton_clicked();
+    void on_addTeamButton_clicked();
 
     /**
      * @brief Deletes a Team object from the vector.

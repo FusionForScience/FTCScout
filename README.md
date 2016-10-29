@@ -1,6 +1,8 @@
 # FTCScout
 Scouting program for FTC competitions
 
+## Version 1.00!
+
 #### Current Features
 - Keeps track of the following:
   - Team Number

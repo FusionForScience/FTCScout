@@ -17,8 +17,20 @@ MainWindow::MainWindow(QWidget *parent) :
     // Install event filter
     qApp->installEventFilter(this);
 
-    // Open data file in truncated mode
-    ifstream myFile(DATA_FILE.c_str() , std::ios::ate);
+    QDir dataDir(DATA_FILE.c_str());
+
+    qDebug() << dataDir.mkpath(DATA_FILE.c_str()) << endl;
+
+    DATA_FILE = DATA_FILE + "/data.txt";
+
+    ifstream myFile(DATA_FILE , ios::ate);
+
+    if(!myFile.is_open())
+    {
+        ofstream createFile(DATA_FILE);
+        createFile.close();
+        myFile.open(DATA_FILE , ios::ate);
+    }
 
     // If the file is empty
     if((int)(myFile.tellg()) == 0)
@@ -219,7 +231,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 /*****************************************************************/
 /*****************************************************************/
 // Team List
-void MainWindow::on_addButton_clicked()
+void MainWindow::on_addTeamButton_clicked()
 {
     // Result of the new team dialog
     bool ok;
