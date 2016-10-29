@@ -11,6 +11,7 @@ using namespace std;
 class Team
 {
 public:
+    // Constructors
     Team();
     Team(int teamNumber);
 

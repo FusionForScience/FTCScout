@@ -30,10 +30,100 @@ class MainWindow : public QMainWindow
 
 public:
     // Constructors
+    /**
+     * @brief Main window constructor
+     * @param parent A QWidget
+     *
+     * Not used
+     */
     explicit MainWindow(QWidget *parent = 0);
 
     // Destructors
     ~MainWindow();
+
+
+private:
+    // Constants
+    // Resource paths
+    const string FIELD_IMAGE = ":/img/Resources/img/field.PNG"; /**< File location of field image (fixme) */
+    const string DATA_FILE = "C:/Users/dogea/Desktop/data.txt"; /**< File location of data file (fixme) */
+
+    // Variables
+    Ui::MainWindow *ui;     /**< Main window object */
+    DrawPath* scene;        /**< Autonomous plan scene */
+    QImage *field;          /**< Background of autonomous plan scene */
+    QPixmap *item;          /**< Pixmap item that is the background of the scene */
+
+    vector <Team> allTeams; /**< Holds all the Team objects */
+
+    int currentTeamIndex;   /**< Holds the current team being looked at */
+
+    // Function prototypes
+    /**
+     * @brief Redraws the field
+     *
+     * @pre None
+     *
+     * @post Scene reset
+     */
+    void drawField();
+
+    /**
+     * @brief Draws autonomous path
+     * @param teamIndex Index of the Team whose path we're drawing
+     * @param autoIndex Index of the path we're drawing
+     * @param color Color to draw the path in
+     *
+     * @pre None
+     *
+     * @post Path drawn to scene
+     */
+    void drawAutoPath(int teamIndex , int autoIndex , QString color);
+
+    /**
+     * @brief Add a Team object to the allTeams vector
+     * @param team Team object to be added
+     *
+     * @pre None
+     *
+     * @post allTeams vector modified
+     */
+    void addTeam(Team team);
+
+    /**
+     * @brief Updates data file
+     * @param filename Path of the data file
+     *
+     * @pre Data file must exist and data file must be available for writing
+     *
+     * @post Data file updated
+     */
+    void updateFile(QString filename);
+
+    /**
+     * @brief Refreshes UI
+     * @param Index of the team we're currently looking at
+     *
+     * @pre Team of index teamIndex must exist
+     *
+     * @post Current UI updated
+     */
+    void refreshUI(int teamIndex);
+
+    // Event filter
+    /**
+     * @brief Filters events and acts when the Other text edit goes out of focus
+     * @param obj Object the event is happening to
+     * @param event Event that has occured
+     * @return Honestly I have no idea what this does but it works.
+     *         As long as you return false, it'll work.
+     *
+     * @pre Object and Event must exist
+     *
+     * @post Team element Other and data file might be updated
+     */
+    bool eventFilter(QObject *obj, QEvent *event);
+
 
 private slots:
     // Team list
@@ -106,7 +196,7 @@ private slots:
     // Editing
 
     /**
-     * @brief On Name: field edited
+     * @brief Updates Name field
      *
      * When the Name: field is edited, then the corresponding team
      * is updated and the data file is updated.
@@ -116,57 +206,198 @@ private slots:
      * @post Current Team object updated and data file updated
      */
     void on_nameEditEdit_editingFinished();
+
+    /**
+     * @brief Updates Place field
+     *
+     * When the Place: field is edited, then the corresponding team
+     * is updated and the data file is updated
+     *
+     * @pre The current team must exist and the data file must be available for writing
+     *
+     * @post Current Team object updated and data file updated
+     */
     void on_placeEditEdit_editingFinished();
+
+    /**
+     * @brief Updates TeleOp Action 1 field
+     *
+     * TeleOp action 1 checkbox is toggled, then the corresponding team
+     * is updated and the data file is updated
+     *
+     * @pre The current team must exist and the data file must be available for writing
+     *
+     * @post Current Team object updated and data file updated
+     */
     void on_teleOpEdit1_clicked(bool checked);
+
+    /**
+     * @brief Updates TeleOp Action 2 field
+     *
+     * TeleOp action 2 checkbox is toggled, then the corresponding team
+     * is updated and the data file is updated
+     *
+     * @pre The current team must exist and the data file must be available for writing
+     *
+     * @post Current Team object updated and data file updated
+     */
     void on_teleOpEdit2_clicked(bool checked);
+
+    /**
+     * @brief Updates TeleOp Action 3 field
+     *
+     * TeleOp action 3 checkbox is toggled, then the corresponding team
+     * is updated and the data file is updated
+     *
+     * @pre The current team must exist and the data file must be available for writing
+     *
+     * @post Current Team object updated and data file updated
+     */
     void on_teleOpEdit3_clicked(bool checked);
+
+    /**
+     * @brief Updates Autonomous Action 1 field
+     *
+     * Autonomous action 1 checkbox is toggled, then the corresponding team
+     * is updated and the data file is updated
+     *
+     * @pre The current team must exist and the data file must be available for writing
+     *
+     * @post Current Team object updated and data file updated
+     */
     void on_autoEdit1_clicked(bool checked);
+
+    /**
+     * @brief Updates Autonomous Action 2 field
+     *
+     * Autonomous action 2 checkbox is toggled, then the corresponding team
+     * is updated and the data file is updated
+     *
+     * @pre The current team must exist and the data file must be available for writing
+     *
+     * @post Current Team object updated and data file updated
+     */
     void on_autoEdit2_clicked(bool checked);
+
+    /**
+     * @brief Updates Autonomous Action 3 field
+     *
+     * Autonomous action 3 checkbox is toggled, then the corresponding team
+     * is updated and the data file is updated
+     *
+     * @pre The current team must exist and the data file must be available for writing
+     *
+     * @post Current Team object updated and data file updated
+     */
     void on_autoEdit3_clicked(bool checked);
 
 
 
     // Path drawing
+    /**
+     * @brief Adds an autonomous path
+     *
+     * Autonomous path is added to Team object and data file updated
+     *
+     * @pre The scene must have a drawing on it and the data file must be available for writing
+     *
+     * @post Current UI updated, Team object updated, and data file updated
+     */
     void on_addPath_clicked();
+
+    /**
+     * @brief Clears current drawing of path
+     *
+     * Current drawing on scene is removed
+     *
+     * @pre None
+     *
+     * @post Current UI updated and the Add path button is disabled
+     */
     void on_clearPath_clicked();
+
+    /**
+     * @brief Removes a path
+     *
+     * Removes path from combobox and Team object, updates data file
+     *
+     * @pre Current path and Team must exist and data file must be available for writing
+     *
+     * @post Current UI updated, Team object updated, and data file updated
+     */
     void on_removePathButton_clicked();
+
+    /**
+     * @brief Removes all paths
+     *
+     * All paths removed from combobox and Team object, updates data file
+     *
+     * @pre Team must exist and data file must be available for writing
+     *
+     * @post Current UI updated, Team object updated, and data file updated
+     */
     void on_removeAllPathsButton_clicked();
+
+    /**
+     * @brief Draws the path clicked
+     * @param index Index of the path chosen to draw
+     *
+     * @pre Current Team and path must exist
+     *
+     * @post Current UI updated and the Remove Path button may change enabled state
+     */
     void on_pathsBox_currentIndexChanged(int index);
+
+    /**
+     * @brief Draws the path clicked from your team's paths
+     * @param index Index of the path chosen to draw
+     *
+     * @pre Your team and its path must exist
+     *
+     * @post Current UI updated
+     */
     void on_yourTeamAutos_currentIndexChanged(int index);
+
+    /**
+     * @brief Draws the path clicked from chosen team's paths
+     * @param index Index of the path chosen to draw
+     *
+     * @pre Current team and its path must exist
+     *
+     * @post Current UI updated
+     */
     void on_theirTeamAutos_currentIndexChanged(int index);
+
+    /**
+     * @brief Allows or disallows drawing
+     * @param index Number of the tab switched to
+     *
+     * @pre None
+     *
+     * @post Scene allows or disallows drawing
+     */
     void on_drawModeTabs_currentChanged(int index);
 
 
 
     // Custom Slots
+    /**
+     * @brief Enables the Add path button
+     *
+     * @pre None
+     *
+     * @post Add path button enabled
+     */
     void enableAddButton();
+
+    /**
+     * @brief Saves data from Other field
+     *
+     * @pre Data file must be available for writing
+     *
+     * @post Team object updated and data file updated
+     */
     void saveOtherData();
-
-private:
-    // Constants
-    // Resource paths
-    const string FIELD_IMAGE = ":/img/Resources/img/field.PNG";
-    const string DATA_FILE = "C:/Users/dogea/Desktop/data.txt";
-
-    // Variables
-    Ui::MainWindow *ui;
-    DrawPath* scene;
-    QImage *field;
-    QPixmap *item;
-
-    vector <Team> allTeams;
-
-    int currentTeamIndex;
-
-    // Function prototypes
-    void drawField();
-    void drawAutoPath(int teamIndex , int autoIndex , QString color);
-    void addTeam(Team team);
-    void updateFile(QString filename);
-    void refreshUI(int teamIndex);
-
-    // Event filter
-    bool eventFilter(QObject *obj, QEvent *event);
 };
 
 #endif // MAINWINDOW_H
