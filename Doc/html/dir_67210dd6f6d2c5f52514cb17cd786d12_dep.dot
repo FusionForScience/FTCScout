@@ -1,0 +1,13 @@
+digraph "C:/Users/dogea" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_d522931ffa1371640980b621734a4381 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Users" fontname="Helvetica", fontsize="10", URL="dir_d522931ffa1371640980b621734a4381.html"]
+  subgraph clusterdir_67210dd6f6d2c5f52514cb17cd786d12 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_67210dd6f6d2c5f52514cb17cd786d12.html"];
+    dir_67210dd6f6d2c5f52514cb17cd786d12 [shape=plaintext label="dogea"];
+    dir_f63d0d575da77c6bfc7d5e50fe5c142b [shape=box label="Desktop" color="red" fillcolor="white" style="filled" URL="dir_f63d0d575da77c6bfc7d5e50fe5c142b.html"];
+  }
+  }
+}

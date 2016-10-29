@@ -1,0 +1,13 @@
+digraph "Team::readFromFile"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node30 [label="Team::readFromFile",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node30 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="MainWindow::on_refreshTeam\lListButton_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a110f0b96d10c1b83dc434a09d988ffa0",tooltip="Refreshes the team list. "];
+  Node31 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="MainWindow::MainWindow",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a8b244be8b7b7db1b08de2a2acb9409db",tooltip="Main window constructor. "];
+  Node31 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node33 [label="MainWindow::on_addButton\l_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a531054788b8045d4a745366b1b49a0a1",tooltip="Creates a new Team object. "];
+}

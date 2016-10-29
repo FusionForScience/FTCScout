@@ -1,0 +1,39 @@
+digraph "MainWindow::enableAddButton"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node40 [label="MainWindow::enableAddButton",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node40 -> Node41 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="MainWindow::drawField",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#aff1872a445dd3f551048191a3405d023",tooltip="Redraws the field. "];
+  Node41 -> Node42 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node42 [label="MainWindow::MainWindow",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a8b244be8b7b7db1b08de2a2acb9409db",tooltip="Main window constructor. "];
+  Node41 -> Node43 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="MainWindow::refreshUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#ad96e0eb40bdc80c41fea8d00d3a2f092",tooltip="Refreshes UI. "];
+  Node43 -> Node42 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="MainWindow::on_addButton\l_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a531054788b8045d4a745366b1b49a0a1",tooltip="Creates a new Team object. "];
+  Node43 -> Node45 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="MainWindow::on_deleteTeam\lButton_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a5bfe4794c7d30d1c91b06152506be33e",tooltip="Deletes a Team object from the vector. "];
+  Node43 -> Node46 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node46 [label="MainWindow::on_yourTeamButton\l_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#ac131f7d66c5cc3df57f72dea542a3915",tooltip="Sets window focus on your team. "];
+  Node43 -> Node47 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 [label="MainWindow::on_teamList\l_itemClicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a1bdeedce983ac9594c024b3698c22556",tooltip="Sets window focus on team clicked. "];
+  Node43 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="MainWindow::on_addPath\l_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a477d9436f529798efe3f63ae8fa36a40",tooltip="Adds an autonomous path. "];
+  Node43 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="MainWindow::on_removePath\lButton_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a946a4e82ac0bcdb3a94b56e1c7f7cf13",tooltip="Removes a path. "];
+  Node43 -> Node50 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="MainWindow::on_removeAll\lPathsButton_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#ac0132d8d0bb8264055137b8f6ca4ffbe",tooltip="Removes all paths. "];
+  Node41 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 -> Node51 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node51 [label="MainWindow::on_clearPath\l_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#abf5dd556be358648af05384bf0570d37",tooltip="Clears current drawing of path. "];
+  Node41 -> Node52 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node52 [label="MainWindow::on_pathsBox\l_currentIndexChanged",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#aab6417fa3f1b456342a645eec95efaf3",tooltip="Draws the path clicked. "];
+  Node41 -> Node53 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="MainWindow::on_yourTeamAutos\l_currentIndexChanged",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a5ef8b4ddf2a05dbf9b6cc9db16ab7660",tooltip="Draws the path clicked from your team&#39;s paths. "];
+  Node41 -> Node54 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 [label="MainWindow::on_theirTeam\lAutos_currentIndexChanged",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#aacc927a9b7a91d6aebb0803b98150d6d",tooltip="Draws the path clicked from chosen team&#39;s paths. "];
+  Node41 -> Node55 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="MainWindow::on_drawModeTabs\l_currentChanged",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a029e7b6bf99fea8dfe8b732353fe2667",tooltip="Allows or disallows drawing. "];
+}

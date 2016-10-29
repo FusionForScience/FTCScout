@@ -1,0 +1,24 @@
+digraph "MainWindow::MainWindow"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="MainWindow::MainWindow",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="Team::writeToFile",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_team.html#a8245bef50c20b4b5caed0525ebbfaea5"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Team::getSinglePath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_team.html#a5df43cd9e7901e78f3ec4d5be1d8062e"];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="MainWindow::drawField",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#aff1872a445dd3f551048191a3405d023",tooltip="Redraws the field. "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="MainWindow::enableAddButton",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a78fcaf82e1e2c3e8a36d37e4cf4a31d4",tooltip="Enables the Add path button. "];
+  Node0 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="MainWindow::on_refreshTeam\lListButton_clicked",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a110f0b96d10c1b83dc434a09d988ffa0",tooltip="Refreshes the team list. "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Team::readFromFile",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_team.html#adc5f6d480da08975cfdb402a4ec9844c"];
+  Node5 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="MainWindow::addTeam",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a5aadf02d0a6b61b2e56afd58db66629b",tooltip="Add a Team object to the allTeams vector. "];
+  Node0 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="MainWindow::refreshUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#ad96e0eb40bdc80c41fea8d00d3a2f092",tooltip="Refreshes UI. "];
+  Node8 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

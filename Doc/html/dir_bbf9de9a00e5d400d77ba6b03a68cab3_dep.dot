@@ -1,0 +1,13 @@
+digraph "C:/Users/dogea/Desktop/Programming/Robotics/Scouting" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ee322ea1c49dd25ff4e0d3c07c077466 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Robotics" fontname="Helvetica", fontsize="10", URL="dir_ee322ea1c49dd25ff4e0d3c07c077466.html"]
+  subgraph clusterdir_bbf9de9a00e5d400d77ba6b03a68cab3 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_bbf9de9a00e5d400d77ba6b03a68cab3.html"];
+    dir_bbf9de9a00e5d400d77ba6b03a68cab3 [shape=plaintext label="Scouting"];
+    dir_99437667730ebabdcc28adb611c0cb97 [shape=box label="FTCScout" color="red" fillcolor="white" style="filled" URL="dir_99437667730ebabdcc28adb611c0cb97.html"];
+  }
+  }
+}

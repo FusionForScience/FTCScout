@@ -1,0 +1,18 @@
+digraph "MainWindow::on_addPath_clicked"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node69 [label="MainWindow::on_addPath\l_clicked",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node69 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node70 [label="DrawPath::getPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_draw_path.html#a4a10bd7eb216c28a391324d9f70c4278"];
+  Node69 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node71 [label="MainWindow::updateFile",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a8c56f492443188c6a0dc034c5d1659c9",tooltip="Updates data file. "];
+  Node69 -> Node72 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 [label="MainWindow::drawField",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#aff1872a445dd3f551048191a3405d023",tooltip="Redraws the field. "];
+  Node72 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node73 [label="MainWindow::enableAddButton",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#a78fcaf82e1e2c3e8a36d37e4cf4a31d4",tooltip="Enables the Add path button. "];
+  Node69 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node74 [label="MainWindow::refreshUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_main_window.html#ad96e0eb40bdc80c41fea8d00d3a2f092",tooltip="Refreshes UI. "];
+  Node74 -> Node72 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}
