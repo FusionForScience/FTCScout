@@ -5,6 +5,9 @@
 
 using namespace std;
 
+/* Constructors and Destructors */
+/*****************************************************************/
+/*****************************************************************/
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -43,9 +46,44 @@ MainWindow::MainWindow(QWidget *parent) :
     refreshUI(currentTeamIndex);
 }
 
+// Destructor
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+
+
+/* Member Functions */
+/*****************************************************************/
+/*****************************************************************/
+void MainWindow::drawField()
+{
+    delete scene;
+    scene = new DrawPath();
+
+    connect(scene , SIGNAL(userHasDrawn()) , this , SLOT(enableAddButton()));
+
+    scene->addPixmap(*item);
+    ui->autonomousPlan->setScene(scene);
+}
+
+void MainWindow::drawAutoPath(int teamIndex, int autoIndex , QString color)
+{
+    int drawRadius = 3;
+
+    QPen myPen;
+
+    myPen.setColor(color);
+
+
+    for(int i = 0; i < allTeams[teamIndex].getSinglePath(autoIndex).size(); i ++)
+    {
+        scene->addEllipse(allTeams[teamIndex].getSinglePath(autoIndex)[i].x()
+                          , allTeams[teamIndex].getSinglePath(autoIndex)[i].y()
+                          , drawRadius * 2.0 , drawRadius * 2.0 , myPen , QBrush(Qt::SolidPattern));
+    }
 }
 
 void MainWindow::addTeam(Team team)
@@ -120,11 +158,14 @@ void MainWindow::refreshUI(int teamIndex)
     }
 }
 
-vector<Team> MainWindow::getAllTeams()
-{
-    return allTeams;
-}
 
+
+
+
+/* Slots */
+/*****************************************************************/
+/*****************************************************************/
+// Team List
 void MainWindow::on_addButton_clicked()
 {
     bool ok;
@@ -148,101 +189,6 @@ void MainWindow::on_addButton_clicked()
     }
 }
 
-void MainWindow::on_refreshTeamListButton_clicked()
-{
-    Team* newTeam = new Team();
-
-    // Number of duplicates encountered
-    int numDupes = 0;
-
-    for(int i = static_cast <int> (allTeams.size()); newTeam->readFromFile(DATA_FILE.c_str() , i , allTeams) != 0; i ++)
-    {
-        if(newTeam->readFromFile(DATA_FILE.c_str() , i , allTeams) == 1)
-        {
-            addTeam(*newTeam);
-
-            if(i != 0)
-            {
-                ui->teamList->addItem(QString::number(allTeams[i - numDupes].getNumber()));
-
-                newTeam->writeToFile("C:/Users/dogea/Desktop/data2.txt");
-            }
-        }
-        else if(newTeam->readFromFile(DATA_FILE.c_str() , i , allTeams) == 2)
-        {
-            numDupes ++;
-        }
-        newTeam = new Team();
-    }
-
-    return;
-}
-
-void MainWindow::drawAutoPath(int teamIndex, int autoIndex , QString color)
-{
-    int drawRadius = 3;
-
-    QPen myPen;
-
-    myPen.setColor(color);
-
-
-    for(int i = 0; i < allTeams[teamIndex].getSinglePath(autoIndex).size(); i ++)
-    {
-        scene->addEllipse(allTeams[teamIndex].getSinglePath(autoIndex)[i].x()
-                          , allTeams[teamIndex].getSinglePath(autoIndex)[i].y()
-                          , drawRadius * 2.0 , drawRadius * 2.0 , myPen , QBrush(Qt::SolidPattern));
-    }
-}
-
-void MainWindow::on_yourTeamAutos_currentIndexChanged(int index)
-{
-    drawField();
-
-    if(index > 0)
-        drawAutoPath(0 , index - 1 , "blue");
-
-    if(ui->theirTeamAutos->currentIndex() > 0)
-        drawAutoPath(currentTeamIndex , ui->theirTeamAutos->currentIndex() - 1 , "red");
-
-
-}
-
-void MainWindow::on_theirTeamAutos_currentIndexChanged(int index)
-{
-    drawField();
-
-    // Draw their auto
-    if(index > 0)
-        drawAutoPath(currentTeamIndex , index - 1 , "red");
-
-    if(ui->yourTeamAutos->currentIndex() > 0)
-        drawAutoPath(0 , ui->yourTeamAutos->currentIndex() - 1 , "blue");
-}
-
-void MainWindow::on_yourTeamButton_clicked()
-{
-    ui->teamList->clearSelection();
-
-    ui->yourTeamAutos->setCurrentIndex(0);
-    ui->theirTeamAutos->setCurrentIndex(0);
-
-    currentTeamIndex = 0;
-
-    refreshUI(currentTeamIndex);
-}
-
-void MainWindow::drawField()
-{
-    delete scene;
-    scene = new DrawPath();
-
-    connect(scene , SIGNAL(userHasDrawn()) , this , SLOT(enableAddButton()));
-
-    scene->addPixmap(*item);
-    ui->autonomousPlan->setScene(scene);
-}
-
 void MainWindow::on_deleteTeamButton_clicked()
 {
     allTeams.erase(allTeams.begin() + ui->teamList->currentRow() + 1);
@@ -263,44 +209,42 @@ void MainWindow::on_deleteTeamButton_clicked()
     return;
 }
 
-void MainWindow::on_drawModeTabs_currentChanged(int index)
+void MainWindow::on_refreshTeamListButton_clicked()
 {
-    drawField();
+    Team* newTeam = new Team();
 
-    if(index == 0)
-        scene->allowDraw = true;
-    else
-        scene->allowDraw = false;
+    // Number of duplicates encountered
+    int numDupes = 0;
+
+    for(int i = static_cast <int> (allTeams.size()); newTeam->readFromFile(DATA_FILE.c_str() , i , allTeams) != 0; i ++)
+    {
+        if(newTeam->readFromFile(DATA_FILE.c_str() , i , allTeams) == 1)
+        {
+            addTeam(*newTeam);
+
+            if(i != 0)
+                ui->teamList->addItem(QString::number(allTeams[i - numDupes].getNumber()));
+        }
+        else if(newTeam->readFromFile(DATA_FILE.c_str() , i , allTeams) == 2)
+            numDupes ++;
+
+        delete newTeam;
+        newTeam = new Team();
+    }
 
     return;
 }
 
-
-void MainWindow::on_addPath_clicked()
+void MainWindow::on_yourTeamButton_clicked()
 {
-    allTeams[currentTeamIndex].addToPathList(scene->getPath());
+    ui->teamList->clearSelection();
 
-    updateFile(DATA_FILE.c_str());
+    ui->yourTeamAutos->setCurrentIndex(0);
+    ui->theirTeamAutos->setCurrentIndex(0);
 
-    drawField();
-
-    ui->addPath->setEnabled(false);
+    currentTeamIndex = 0;
 
     refreshUI(currentTeamIndex);
-}
-
-void MainWindow::on_pathsBox_currentIndexChanged(int index)
-{
-    drawField();
-
-    if(index > 0)
-    {
-        drawAutoPath(currentTeamIndex , index - 1 , "black");
-        scene->allowDraw = false;
-        ui->removePathButton->setEnabled(true);
-    }
-    else
-        ui->removePathButton->setEnabled(false);
 }
 
 void MainWindow::on_teamList_itemClicked(QListWidgetItem *item)
@@ -321,27 +265,8 @@ void MainWindow::on_teamList_itemClicked(QListWidgetItem *item)
     refreshUI(currentTeamIndex);
 }
 
-void MainWindow::enableAddButton()
-{
-    ui->addPath->setEnabled(true);
-}
 
-void MainWindow::saveOtherData()
-{
-    allTeams[currentTeamIndex].setOther(ui->otherEditEdit->toPlainText().toStdString());
-    updateFile(DATA_FILE.c_str());
-}
-
-void MainWindow::on_clearPath_clicked()
-{
-    drawField();
-
-    ui->yourTeamAutos->setCurrentIndex(0);
-    ui->theirTeamAutos->setCurrentIndex(0);
-
-    ui->addPath->setEnabled(false);
-}
-
+// Editing
 void MainWindow::on_nameEditEdit_editingFinished()
 {
     allTeams[currentTeamIndex].setName(ui->nameEditEdit->text().toStdString());
@@ -390,19 +315,29 @@ void MainWindow::on_autoEdit3_clicked(bool checked)
     updateFile(DATA_FILE.c_str());
 }
 
-void MainWindow::on_otherEditEdit_textChanged()
-{
 
+// Path Drawing
+void MainWindow::on_addPath_clicked()
+{
+    allTeams[currentTeamIndex].addToPathList(scene->getPath());
+
+    updateFile(DATA_FILE.c_str());
+
+    drawField();
+
+    ui->addPath->setEnabled(false);
+
+    refreshUI(currentTeamIndex);
 }
 
-bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+void MainWindow::on_clearPath_clicked()
 {
-    if(obj == ui->otherEditEdit && event->type() == QEvent::FocusOut)
-    {
-        allTeams[currentTeamIndex].setOther(ui->otherEditEdit->toPlainText().toStdString());
-        updateFile(DATA_FILE.c_str());
-    }
-    return false;
+    drawField();
+
+    ui->yourTeamAutos->setCurrentIndex(0);
+    ui->theirTeamAutos->setCurrentIndex(0);
+
+    ui->addPath->setEnabled(false);
 }
 
 void MainWindow::on_removePathButton_clicked()
@@ -426,4 +361,85 @@ void MainWindow::on_removeAllPathsButton_clicked()
     updateFile(DATA_FILE.c_str());
 
     refreshUI(currentTeamIndex);
+}
+
+void MainWindow::on_pathsBox_currentIndexChanged(int index)
+{
+    drawField();
+
+    if(index > 0)
+    {
+        drawAutoPath(currentTeamIndex , index - 1 , "black");
+        scene->allowDraw = false;
+        ui->removePathButton->setEnabled(true);
+    }
+    else
+        ui->removePathButton->setEnabled(false);
+}
+
+void MainWindow::on_yourTeamAutos_currentIndexChanged(int index)
+{
+    drawField();
+
+    if(index > 0)
+        drawAutoPath(0 , index - 1 , "blue");
+
+    if(ui->theirTeamAutos->currentIndex() > 0)
+        drawAutoPath(currentTeamIndex , ui->theirTeamAutos->currentIndex() - 1 , "red");
+
+
+}
+
+void MainWindow::on_theirTeamAutos_currentIndexChanged(int index)
+{
+    drawField();
+
+    // Draw their auto
+    if(index > 0)
+        drawAutoPath(currentTeamIndex , index - 1 , "red");
+
+    if(ui->yourTeamAutos->currentIndex() > 0)
+        drawAutoPath(0 , ui->yourTeamAutos->currentIndex() - 1 , "blue");
+}
+
+void MainWindow::on_drawModeTabs_currentChanged(int index)
+{
+    drawField();
+
+    if(index == 0)
+        scene->allowDraw = true;
+    else
+        scene->allowDraw = false;
+
+    return;
+}
+
+
+// Custom slots
+void MainWindow::enableAddButton()
+{
+    ui->addPath->setEnabled(true);
+}
+
+void MainWindow::saveOtherData()
+{
+    allTeams[currentTeamIndex].setOther(ui->otherEditEdit->toPlainText().toStdString());
+    updateFile(DATA_FILE.c_str());
+}
+
+
+
+
+
+/* Event Filter */
+/*****************************************************************/
+/*****************************************************************/
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj == ui->otherEditEdit && event->type() == QEvent::FocusOut)
+    {
+        allTeams[currentTeamIndex].setOther(ui->otherEditEdit->toPlainText().toStdString());
+        updateFile(DATA_FILE.c_str());
+    }
+    return false;
 }
