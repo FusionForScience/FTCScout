@@ -109,7 +109,7 @@ void Team::writeToFile(string fileName)
     ofstream myFile;
 
     // Write to file, WOW
-    myFile.open(fileName , std::ios_base::app , ios::binary);
+    myFile.open(fileName , std::ios_base::app);
 
     // Denote start of a new team
     myFile << "~" << endl;

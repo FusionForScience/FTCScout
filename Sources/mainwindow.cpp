@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qApp->installEventFilter(this);
 
     QDir dataDir(DATA_FILE.c_str());
+    scene = new DrawPath(this);
 
     qDebug() << dataDir.mkpath(DATA_FILE.c_str()) << endl;
 
@@ -109,7 +110,7 @@ void MainWindow::drawAutoPath(int teamIndex, int autoIndex , QString color)
     myPen.setColor(color);
 
 
-    for(int i = 0; i < allTeams[teamIndex].getSinglePath(autoIndex).size(); i ++)
+    for(int i = 0; i < (int)(allTeams[teamIndex].getSinglePath(autoIndex).size()); i ++)
     {
         scene->addEllipse(allTeams[teamIndex].getSinglePath(autoIndex)[i].x()
                           , allTeams[teamIndex].getSinglePath(autoIndex)[i].y()
@@ -126,14 +127,14 @@ void MainWindow::addTeam(Team team)
     return;
 }
 
-void MainWindow::updateFile(QString filename)
+void MainWindow::updateFile()
 {
     // Delete file so we don't append to it or leave leftover information
     // Fixme... There's a better way to do this
     remove(DATA_FILE.c_str());
 
     // Write each team to the file
-    for(int i = 0; i < allTeams.size(); i ++)
+    for(int i = 0; i < (int)(allTeams.size()); i ++)
     {
         allTeams[i].writeToFile(DATA_FILE.c_str());
     }
@@ -182,21 +183,21 @@ void MainWindow::refreshUI(int teamIndex)
 
     // Reset Paths combobox
     ui->pathsBox->addItem("New");
-    for(int i = 0; i < allTeams[teamIndex].getPaths().size(); i ++)
+    for(int i = 0; i < (int)(allTeams[teamIndex].getPaths().size()); i ++)
     {
         ui->pathsBox->addItem(QString::number(i + 1));
     }
 
     // Reset Your Team Autos combobox
     ui->yourTeamAutos->addItem("Team " + QString::number(allTeams[0].getNumber()));
-    for(int i = 0; i < allTeams[0].getPaths().size(); i ++)
+    for(int i = 0; i < (int)(allTeams[0].getPaths().size()); i ++)
     {
         ui->yourTeamAutos->addItem(QString::number(i + 1));
     }
 
     // Reset Their Team Autos combobox
     ui->theirTeamAutos->addItem("Team " + QString::number(allTeams[teamIndex].getNumber()));
-    for(int i = 0; i < allTeams[teamIndex].getPaths().size(); i ++)
+    for(int i = 0; i < (int)(allTeams[teamIndex].getPaths().size()); i ++)
     {
         ui->theirTeamAutos->addItem(QString::number(i + 1));
     }
@@ -217,7 +218,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
     if(obj == ui->otherEditEdit && event->type() == QEvent::FocusOut)
     {
         allTeams[currentTeamIndex].setOther(ui->otherEditEdit->toPlainText().toStdString());
-        updateFile(DATA_FILE.c_str());
+        updateFile();
     }
 
     return false;
@@ -275,7 +276,7 @@ void MainWindow::on_deleteTeamButton_clicked()
     delete ui->teamList->currentItem();
 
     // Update file to reflect deletion
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     // If there's still stuff in the list
     // Set the current team index to 1 less because
@@ -345,6 +346,7 @@ void MainWindow::on_yourTeamButton_clicked()
 void MainWindow::on_teamList_itemClicked(QListWidgetItem *item)
 {
     // I don't need this, and I don't like compiler warnings
+    // Switched compilers, now I have warning :(
     item = 0;
 
     // Switches to default so that attempts to render don't crash program
@@ -371,7 +373,7 @@ void MainWindow::on_teamList_itemClicked(QListWidgetItem *item)
 void MainWindow::on_nameEditEdit_editingFinished()
 {
     allTeams[currentTeamIndex].setName(ui->nameEditEdit->text().toStdString());
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }
@@ -379,7 +381,7 @@ void MainWindow::on_nameEditEdit_editingFinished()
 void MainWindow::on_placeEditEdit_editingFinished()
 {
     allTeams[currentTeamIndex].setPlace(ui->placeEditEdit->text().toInt());
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }
@@ -387,7 +389,7 @@ void MainWindow::on_placeEditEdit_editingFinished()
 void MainWindow::on_teleOpEdit1_clicked(bool checked)
 {
     allTeams[currentTeamIndex].setTeleOpElement(0 , checked);
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }
@@ -395,7 +397,7 @@ void MainWindow::on_teleOpEdit1_clicked(bool checked)
 void MainWindow::on_teleOpEdit2_clicked(bool checked)
 {
     allTeams[currentTeamIndex].setTeleOpElement(1 , checked);
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }
@@ -403,7 +405,7 @@ void MainWindow::on_teleOpEdit2_clicked(bool checked)
 void MainWindow::on_teleOpEdit3_clicked(bool checked)
 {
     allTeams[currentTeamIndex].setTeleOpElement(2 , checked);
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }
@@ -411,7 +413,7 @@ void MainWindow::on_teleOpEdit3_clicked(bool checked)
 void MainWindow::on_autoEdit1_clicked(bool checked)
 {
     allTeams[currentTeamIndex].setAutoElement(0 , checked);
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }
@@ -419,7 +421,7 @@ void MainWindow::on_autoEdit1_clicked(bool checked)
 void MainWindow::on_autoEdit2_clicked(bool checked)
 {
     allTeams[currentTeamIndex].setAutoElement(1 , checked);
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }
@@ -427,7 +429,7 @@ void MainWindow::on_autoEdit2_clicked(bool checked)
 void MainWindow::on_autoEdit3_clicked(bool checked)
 {
     allTeams[currentTeamIndex].setAutoElement(2 , checked);
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }
@@ -440,7 +442,7 @@ void MainWindow::on_addPath_clicked()
     allTeams[currentTeamIndex].addToPathList(scene->getPath());
 
     // Update file
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     // Reset scene
     drawField();
@@ -478,7 +480,7 @@ void MainWindow::on_removePathButton_clicked()
     ui->pathsBox->removeItem(ui->pathsBox->currentIndex());
 
     // Update data file
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     // Update UI to reflect changes
     refreshUI(currentTeamIndex);
@@ -496,7 +498,7 @@ void MainWindow::on_removeAllPathsButton_clicked()
     ui->pathsBox->addItem("New");
 
     // Update data file
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     // Update UI to reflect changes
     refreshUI(currentTeamIndex);
@@ -587,7 +589,7 @@ void MainWindow::saveOtherData()
 {
     // Saves data from Other field to Team object and data file.
     allTeams[currentTeamIndex].setOther(ui->otherEditEdit->toPlainText().toStdString());
-    updateFile(DATA_FILE.c_str());
+    updateFile();
 
     return;
 }

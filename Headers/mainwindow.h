@@ -93,13 +93,12 @@ private:
 
     /**
      * @brief Updates data file
-     * @param filename Path of the data file
      *
      * @pre Data file must exist and data file must be available for writing
      *
      * @post Data file updated
      */
-    void updateFile(QString filename);
+    void updateFile();
 
     /**
      * @brief Refreshes UI
