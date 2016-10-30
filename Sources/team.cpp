@@ -11,8 +11,8 @@ Team::Team(int teamNumber)
     name = "Amazing name here :)";
     place = 1;
 
-    teleOpAbilities[TELEOP_NUM_ABILITIES];
-    autoAbilities[AUTO_NUM_ABILITIES];
+    teleOpAbilities[TELEOP_NUM_ABILITIES] = {false};
+    autoAbilities[AUTO_NUM_ABILITIES] = {false};
 
     other = "";
 
@@ -218,14 +218,14 @@ int Team::readFromFile(string fileName , int targetReadNumber , vector <Team> al
                 // Check duplicates
                 for(int i = 0; i < alreadyRead.size() && returnCode != 2; i ++)
                 {
-                    if(stoi(temp) == alreadyRead[i].number)
+                    if(atoi(temp.c_str()) == alreadyRead[i].number)
                     {
                         returnCode = 2;
                         return 2;
                     }
                 }
                 if(returnCode != 2)
-                    number = stoi(temp);
+                    number = atoi(temp.c_str());
             }
             // If the team we're reading isn't a duplicate
             if(returnCode != 2)
@@ -239,7 +239,7 @@ int Team::readFromFile(string fileName , int targetReadNumber , vector <Team> al
                 else if(temp.find(PLACE_STRING) != string::npos)
                 {
                     temp = temp.substr(PLACE_STRING.length() , line.length() - PLACE_STRING.length());
-                    place = stoi(temp);
+                    place = atoi(temp.c_str());
                 }
                 else if(temp.find(TELEOP_ABILITIES_STRING) != string::npos)
                 {
@@ -247,7 +247,7 @@ int Team::readFromFile(string fileName , int targetReadNumber , vector <Team> al
 
                     for(int i = 0; i < TELEOP_NUM_ABILITIES; i ++)
                     {
-                        teleOpAbilities[i] = stoi(temp.substr(i * 2 , 1));
+                        teleOpAbilities[i] = atoi(temp.substr(i * 2 , 1).c_str());
                     }
                 }
                 else if(temp.find(AUTO_ABILITIES_STRING) != string::npos)
@@ -256,7 +256,7 @@ int Team::readFromFile(string fileName , int targetReadNumber , vector <Team> al
 
                     for(int i = 0; i < AUTO_NUM_ABILITIES; i ++)
                     {
-                        autoAbilities[i] = stoi(temp.substr(i * 2 , 1));
+                        autoAbilities[i] = atoi(temp.substr(i * 2 , 1).c_str());
                     }
                 }
                 else if(temp.find(AUTO_PATHS_STRING) != string::npos)
@@ -270,18 +270,18 @@ int Team::readFromFile(string fileName , int targetReadNumber , vector <Team> al
                     for(int i = 0; temp.length() != 0 && readPath; i ++)
                     {
                         // Get X coordinate
-                        point.setX(stoi(temp.substr(0 , temp.find(","))));
+                        point.setX(atoi(temp.substr(0 , temp.find(",")).c_str()));
                         temp.erase(0 , temp.find(",") + 1);
 
                         // Get Y coordinate
                         if(temp.find("+") == string::npos)
                         {
-                            point.setY(stoi(temp));
+                            point.setY(atoi(temp.c_str()));
                             temp.erase();
                         }
                         else if(temp.find("!") < temp.find("+"))
                         {
-                            point.setY(stoi(temp.substr(0 , temp.find("!"))));
+                            point.setY(atoi(temp.substr(0 , temp.find("!")).c_str()));
 
                             myPaths.push_back(path);
                             path.clear();
@@ -290,7 +290,7 @@ int Team::readFromFile(string fileName , int targetReadNumber , vector <Team> al
                         }
                         else
                         {
-                            point.setY(stoi(temp.substr(0 , temp.find("+"))));
+                            point.setY(atoi(temp.substr(0 , temp.find("+")).c_str()));
                             temp.erase(0 , temp.find("+") + 1);
                         }
 
@@ -311,7 +311,7 @@ int Team::readFromFile(string fileName , int targetReadNumber , vector <Team> al
                 {
                     temp = temp.substr(COMPATIBLE_STRING.length() , temp.length() - COMPATIBLE_STRING.length());
 
-                    isCompatible = stoi(temp);
+                    isCompatible = atoi(temp.c_str());
                 }
                 else if(temp.find(TEAM_END) != string::npos)
                 {
